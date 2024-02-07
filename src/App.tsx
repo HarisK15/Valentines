@@ -1,35 +1,62 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
+export default function Page() {
+  const [noCount, setNoCount] = useState(0);
+  const [yesPressed, setYesPressed] = useState(false);
+  const yesButtonSize = noCount * 20 + 16;
+
+  const handleNoClick = () => {
+    setNoCount(noCount + 1);
+  };
+
+  const getNoButtonText = () => {
+    const phrases = [
+      "No",
+      "Niro, Are you sure?",
+      "Really sure?",
+      "Chellam, Cmon",
+      "Last chance!",
+      "You're breaking my heart shorty;(",
+    ];
+
+    return phrases[Math.min(noCount, phrases.length - 1)];
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="centered-container">
+      <div className="valentine-container">
+        {yesPressed ? (
+          <>
+            <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" />
+            <div className="text-container">Ok yay!!!</div>
+          </>
+        ) : (
+          <>
+            <img
+              className="h-[200px]"
+              style={{ width: "400x", height: "240px" }}
+              src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif"
+            />
+            <h1 className="text-container">
+              Will you be my valentines Chellam?
+            </h1>
+            <div>
+              <button
+                className={"yes-button"}
+                style={{ fontSize: yesButtonSize }}
+                onClick={() => setYesPressed(true)}
+              >
+                Yes
+              </button>
+
+              <button onClick={handleNoClick} className="no-button">
+                {noCount === 0 ? "No" : getNoButtonText()}
+              </button>
+            </div>
+          </>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   );
 }
-
-export default App;
